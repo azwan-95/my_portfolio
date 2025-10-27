@@ -7,7 +7,7 @@ I use data to support decision-making, improve operational efficiency, and uncov
 
 ## 🗂 Portfolio
 Explore my projects here:  
-🔗 [https://github.com/azwan-95/my_portfolio/tree/main/Car%20sales/car_prices.csv]
+🔗 [https://github.com/azwan-95/my_portfolio/tree/main/Car%20sales]
 
 ---
 ## 🧠 What I Do
