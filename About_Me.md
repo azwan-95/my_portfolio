@@ -1,7 +1,10 @@
 # About Me
 
-Hi, I'm **Azwan**, a data analyst and researcher with experience in government projects and coordination.  
-I use data to support decision-making, improve operational efficiency, and uncover actionable insights.
+Hi, Business Analyst with 4 years’ experience in data analysis, workflow automation, and process improvement
+across corporate, government, and start-up sectors. Proven track record in management reporting,
+requirements gathering, and SOP development to enhance efficiency and compliance. Skilled at leveraging
+data-driven insights and stakeholder coordination to support transformation initiatives and enable informed
+decision-making.
 
 ---
 
