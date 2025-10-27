@@ -1,6 +1,6 @@
 # About Me
 
-Hi, Business Analyst with 4 years’ experience in data analysis, workflow automation, and process improvement
+Hi! I'm Mohammad Azwan a Business Analyst with 4 years’ experience in data analysis, workflow automation, and process improvement
 across corporate, government, and start-up sectors. Proven track record in management reporting,
 requirements gathering, and SOP development to enhance efficiency and compliance. Skilled at leveraging
 data-driven insights and stakeholder coordination to support transformation initiatives and enable informed
@@ -32,17 +32,16 @@ Explore my projects here:
 ## 🧩 Tools & Skills
 | Category | Tools / Skills |
 |-----------|----------------|
-| Data Analysis | Python (pandas, matplotlib), SQL, Excel |
+| Data Analysis | Excel, Python (pandas, matplotlib), SQL |
 | BI & Visualization | Power BI, Tableau, Looker Studio |
-| Machine Learning | scikit-learn, regression models |
 | Project Coordination | Stakeholder management, documentation |
 | Other | Git, ETL, data cleaning, storytelling |
 
 ---
 
 ## 🌍 Professional Approach
-I believe data should serve real outcomes — not just reports.  
-My work focuses on **clarity, accuracy, and usability** of data insights.
+My work emphasizes clarity, accuracy, and usability in data insights.
+I favor an automated approach, aiming to achieve 80% of the results with 20% of the effort.
 
 ---
 
@@ -51,5 +50,3 @@ My work focuses on **clarity, accuracy, and usability** of data insights.
 - **GitHub:** [https://github.com/azwan-95/my_portfolio]
 
 ---
-
-*“Data is not just numbers — it’s the voice of reality.”*
