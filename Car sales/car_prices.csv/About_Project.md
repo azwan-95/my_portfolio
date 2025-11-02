@@ -1,6 +1,6 @@
 
-# Define the markdown content
 ## Car Sales Analysis
+
 
 ### Project Overview
 This analysis is based on a dataset containing car sales data, including car models, selling prices, and market prices (MMR).  
@@ -32,6 +32,16 @@ The dataset includes the following columns:
 
 ---
 
+### Data Transformation
+https://github.com/azwan-95/my_portfolio/blob/main/Car%20sales/car_prices.csv/data.py
+
+---
+
+### Cleaned Data
+https://github.com/azwan-95/my_portfolio/blob/main/Car%20sales/car_prices.csv/car_prices.csv
+
+---
+
 ### Business Questions
 1. Which car models are most preferred by customers?  
 2. Does model preference vary by state?  
@@ -55,7 +65,7 @@ The dataset includes the following columns:
 
 ### Key Findings
 - **Top 5 car models sold:** Altima, F-150, Fusion, Camry, Escape.  
-- **Yes, each state have different preference for the car model.
+- **Yes**, each state have different preference for the car model.
 - **Top 3 body types:** Sedan (45%), SUV (26%), Pickup (8%).  
 - **Odometer impact:** Cars with lower mileage sell faster and at higher prices.  
 - **Condition:** Higher condition scores correlate with higher selling prices.  
@@ -87,3 +97,5 @@ This helps forecast profitable cars and support data-driven decision-making.
 ### Summary
 This analysis provides insights into customer preferences, vehicle condition impact, and profit margins.  
 It demonstrates how data cleaning, exploratory analysis, and predictive modeling can improve decision-making in the automotive sales industry.
+
+---

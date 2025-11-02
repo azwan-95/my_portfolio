@@ -10,7 +10,7 @@ decision-making.
 
 ## 🗂 Portfolio
 Explore my projects here:  
-🔗 [Car Sales Case Study - (https://github.com/azwan-95/my_portfolio/tree/main/Car%20sales/car_prices.csv)]
+🔗 [Car Sales Case Study - (https://github.com/azwan-95/my_portfolio/blob/main/Car%20sales/car_prices.csv/About_Project.md)]
 
 ---
 ## 🧠 What I Do
