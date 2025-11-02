@@ -43,6 +43,12 @@
 
 # 1. Importing necessary libraries
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+
 
 # 2. Load the dataset
 df = pd.read_csv("car_prices.csv")
@@ -87,7 +93,7 @@ df['saledate']= pd.to_datetime(df['saledate'], utc=True)
 df.dtypes
 
 # 7. Next, I will check for any outliers in the numerical columns.
-import matplotlib.pyplot as plt
+
 
 numerical_columns = ['year', 'condition', 'odometer', 'mmr', 'sellingprice']
 
@@ -150,6 +156,23 @@ df_clean.describe()
 # 1. Which car model is preferred by customers, top 5 models?
 model_counts = df_clean['model'].value_counts()
 model_counts.head(5) 
+
+top5_models = df_clean['model'].value_counts().head(5)
+
+plt.figure(figsize=(8,5))
+top5_models.plot(kind='bar', color='skyblue')
+plt.title("Top 5 Preferred Car Models by Customers")
+plt.xlabel("Car Model")
+plt.ylabel("Number of Cars Sold")
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+# Show values on top of bars
+for i, v in enumerate(top5_models):
+    plt.text(i, v + 5, str(v), ha='center', fontweight='bold')
+
+plt.tight_layout()
+plt.show()
 
 ## The top 5 preferred car models by customers are:
 # 1. Altima
@@ -249,9 +272,6 @@ percentage
 
 # 4. Does odometer reading affect the selling count?
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 
 sns.histplot(df_clean['odometer'], bins=50)
 plt.title("Distribution of Cars Sold by Odometer Reading")
@@ -269,14 +289,32 @@ plt.show()
 
 # Yes the odomoter reading does affect the selling count and the lower odometer reading cars are preferred by customers with higher selling price.
 
-# 5. Does condition affect the selling count?
+# 5. Does condition affect the selling price and count?
 
-sns.scatterplot(x='condition',y='sellingprice', data=df_clean, alpha=0.4)
+plt.figure(figsize=(10,6))
 
-sns.histplot(df_clean['condition'], bins=50)
-plt.title("Distribution of Cars Sold by Condition")
+# Scatter plot
+sns.scatterplot(
+    x='condition', 
+    y='sellingprice', 
+    data=df_clean, 
+    alpha=0.4,
+    label='Selling Price vs Condition'  # legend label
+)
+
+# Histogram (secondary y-axis if you want both on same figure)
+sns.histplot(
+    df_clean['condition'], 
+    bins=50, 
+    color='orange', 
+    alpha=0.3, 
+    label='Distribution of Condition'
+)
+
+plt.title("Condition vs Selling Price and Condition Distribution")
 plt.xlabel("Condition")
-plt.ylabel("Count of Cars Sold")
+plt.ylabel("Selling Price / Count")
+plt.legend()
 plt.show()
 
 # It seem to have outliner in condition below 10. Othwise the price of car sold perpendicular to the condition rating.
@@ -289,9 +327,6 @@ margin_car_model = df_clean.groupby('make')['margin'].mean().sort_values(ascendi
 
 
 # To create a ML on margin
-
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
 
 # Define features and target
 X = df_clean[['odometer', 'condition', 'new_body_type', 'model']]
@@ -387,7 +422,6 @@ plt.show()
 # --- End of Regional R² analysis ---
 
 # --- Model-specific Linear Regression Equations ---
-from sklearn.linear_model import LinearRegression
 
 models = df_clean['model'].value_counts().index  # all models
 results = {}
