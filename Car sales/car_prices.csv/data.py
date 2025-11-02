@@ -294,11 +294,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 
 # Define features and target
-X = df_clean[['odometer', 'condition', 'mmr', 'new_body_type', 'model']]
-y = df_clean['margin']
+X = df_clean[['odometer', 'condition', 'new_body_type', 'model']]
+y = df_clean['sellingprice']
 
 # One-hot encode categorical columns (convert strings to numeric)
-X = pd.get_dummies(X, columns=['new_body_type', 'model'], drop_first=True)
+X = pd.get_dummies(X, columns=['new_body_type', 'model'], drop_first=True, dtype=float)
 
 # Check: confirm all are numeric
 print(X.dtypes.head())
@@ -312,3 +312,153 @@ model.fit(X_train, y_train)
 
 # Predict
 y_pred = model.predict(X_test)
+
+# Evaluate model performance
+r2_train = model.score(X_train, y_train)
+r2_test = model.score(X_test, y_test)
+
+
+# Print results
+print(f"R² on training set: {r2_train:.4f}")
+print(f"R² on test set: {r2_test:.4f}")
+
+# The results show R2 training set is 0.9801 while R2 test is 0.8662
+# This indicates that the model performs well on unseen data, suggesting that odometer, condition, body type, and model are significant factors in determining the selling price of cars.
+
+# As we know based on the question 2, where the car model differ by state, thus we can try to check R2 by state.
+
+# --- Regional R² analysis ---
+states = df_clean['state'].value_counts().index[:5]  # top 5 states by sample count
+results = {}
+
+for s in states:
+    temp = df_clean[df_clean['state'] == s]
+    if len(temp) < 200:  # skip small samples
+        continue
+    X = temp[['odometer', 'condition', 'new_body_type', 'model']]
+    y = temp['sellingprice']
+    
+    # Encode categorical columns
+    X = pd.get_dummies(X, columns=['new_body_type', 'model'], drop_first=True, dtype=float)
+    
+    # Fill any remaining missing values (optional)
+    X = X.fillna(0)
+    y = y.fillna(0)
+    
+    # Train-test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Fit model
+    model = RandomForestRegressor(random_state=42)  # reinitialize inside loop to avoid state issues
+    model.fit(X_train, y_train)
+    
+    # Evaluate
+    r2 = model.score(X_test, y_test)
+    results[s] = round(r2, 3)
+
+print("Regional R² results:")
+print(results)
+
+# The regional R2 results shows that the model performs consistently well across different states:
+# 'fl': 0.863, 'ca': 0.856, 'pa': 0.783, 'tx': 0.794, 'ga': 0.838
+
+# Plotting the regional R² results
+results = {'fl': 0.863, 'ca': 0.856, 'pa': 0.783, 'tx': 0.794, 'ga': 0.838}
+
+# Prepare data
+states = list(results.keys())
+r2_scores = list(results.values())
+
+# Plot
+plt.figure(figsize=(8,5))
+plt.bar(states, r2_scores, color='skyblue')
+plt.ylim(0,1)
+plt.title("Regional R² Results for Selling Price Prediction")
+plt.xlabel("State")
+plt.ylabel("R² Score")
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+# Show values on top of bars
+for i, v in enumerate(r2_scores):
+    plt.text(i, v + 0.01, str(v), ha='center', fontweight='bold')
+
+plt.show()
+
+# --- End of Regional R² analysis ---
+
+# --- Model-specific Linear Regression Equations ---
+from sklearn.linear_model import LinearRegression
+
+models = df_clean['model'].value_counts().index  # all models
+results = {}
+
+for m in models:
+    df_model = df_clean[df_clean['model'] == m]
+    
+    if len(df_model) < 50:  # skip models with very few samples
+        continue
+    
+    X = df_model[['odometer', 'condition', 'new_body_type']]
+    y = df_model['sellingprice']
+    
+    # One-hot encode body type only for this model
+    X = pd.get_dummies(X, columns=['new_body_type'], drop_first=True, dtype=float)
+    
+    # Split and train
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    lr = LinearRegression()
+    lr.fit(X_train, y_train)
+    
+    # Prepare equation
+    intercept = lr.intercept_
+    coefs = lr.coef_
+    features = X.columns
+    equation = f"y = {intercept:.2f} " + " ".join([f"+ {c:.2f}*{f}" for f, c in zip(features, coefs)])
+    
+    # Store results
+    results[m] = {
+        'equation': equation,
+        'r2_train': lr.score(X_train, y_train),
+        'r2_test': lr.score(X_test, y_test)
+    }
+
+# Print equation for one model
+for model_name, info in results.items():
+    print(f"Model: {model_name}")
+    print(f"Equation: {info['equation']}")
+    print(f"R² Train: {info['r2_train']:.3f}, R² Test: {info['r2_test']:.3f}\n")
+
+# The final finding for the selling price prediction are as below:
+
+# Model: Altima
+# Equation: y = 13457.78 + -0.07*odometer + 67.84*condition + -556.01*new_body_type_sedan
+# R² Train: 0.754, R² Test: 0.739
+
+# Model: F-150
+# Equation: y = 24542.37 + -0.12*odometer + 94.60*condition
+# R² Train: 0.558, R² Test: 0.566
+
+# Model: Fusion
+# Equation: y = 14775.00 + -0.10*odometer + 65.20*condition
+# R² Train: 0.674, R² Test: 0.670
+
+# Model: Camry
+# Equation: y = 13066.86 + -0.07*odometer + 76.07*condition + 226.01*new_body_type_sedan + -138.74*new_body_type_wagon
+# R² Train: 0.808, R² Test: 0.816
+
+# Model: Escape
+# Equation: y = 17880.19 + -0.11*odometer + 60.18*condition
+# R² Train: 0.606, R² Test: 0.739
+
+# Model: Focus
+# Equation: y = 9476.78 + -0.07*odometer + 54.25*condition + 1994.77*new_body_type_hatchback + 1280.67*new_body_type_sedan + 407.63*new_body_type_wagon
+# R² Train: 0.704, R² Test: 0.703
+
+# Model: Accord
+# ...
+# Model: Astra
+# Equation: y = 6160.32 + -0.04*odometer + 36.86*condition
+# R² Train: 0.531, R² Test: 0.586
+
+# Now that all the data show good result. We can save our cleaned data in csv for future use.
+df_clean.to_csv('df_clean_new.csv', index=False)
