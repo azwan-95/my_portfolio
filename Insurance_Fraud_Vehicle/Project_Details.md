@@ -38,6 +38,9 @@ A data dictionary is created and saved as `data_dictionary.json` for reference.
 ---
 
 ## 4. ETL Process
+
+**ETL Link:** (https://github.com/azwan-95/my_portfolio/blob/main/Insurance_Fraud_Vehicle/etl.py)  
+
 **Data Checks**
 - No missing or duplicate records found.  
 - All columns explored for data type and structure.  
