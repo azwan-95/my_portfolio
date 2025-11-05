@@ -9,8 +9,9 @@ Data Analyst with 4 years’ experience delivering data insights, automation, an
 
 ## 🗂 Portfolio
 Explore my projects here:  
-🔗 [Car Sales Case Study - (https://github.com/azwan-95/my_portfolio/blob/main/Car%20sales/car_prices.csv/About_Project.md)]
-🔗 [Insurance Fraud Detection - (https://github.com/azwan-95/my_portfolio/blob/main/Insurance_Fraud_Vehicle/Project_Details.md)]
+1. Car Sales Case Study - (https://github.com/azwan-95/my_portfolio/blob/main/Car%20sales/car_prices.csv/About_Project.md)
+
+2. Insurance Fraud Detection - (https://github.com/azwan-95/my_portfolio/blob/main/Insurance_Fraud_Vehicle/Project_Details.md)
 
 ## 🧠 What I Do
 - Analyze business and policy data to support data-driven decisions.  
